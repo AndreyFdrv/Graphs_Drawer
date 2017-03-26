@@ -12,7 +12,11 @@ public:
     Graph();
     void AddPoint(double x, double y);
     void RemovePoint(int index);
-    void LoadGraphFromFile(char* filename);
+    void LoadGraphFromFile(char *filename);
+    QString getName();
+    double getX(int index);
+    double getY(int index);
+    int PointsCount();
 };
 
 #endif // GRAPH_H

@@ -1,6 +1,7 @@
 #include "Graph.h"
 #include "QFile"
 #include <QTextStream>
+#include <QMessageBox>
 Graph::Graph()
 {
 }
@@ -23,7 +24,11 @@ void Graph::LoadGraphFromFile(char* filename)
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        printf("%s can not be found\n", filename);
+        QMessageBox msgBox;
+        QString message="Файл \""+QString(filename)+
+                "\" не был найден\n";
+        msgBox.setText(message);
+        msgBox.exec();
         return;
     }
     QTextStream in(&file);
@@ -44,4 +49,20 @@ void Graph::LoadGraphFromFile(char* filename)
         double y=number_str.toDouble();
         AddPoint(x, y);
     }
+}
+QString Graph::getName()
+{
+    return name;
+}
+double Graph::getX(int index)
+{
+    return points.at(index).x();
+}
+double Graph::getY(int index)
+{
+    return points.at(index).y();
+}
+int Graph::PointsCount()
+{
+    return points.length();
 }
