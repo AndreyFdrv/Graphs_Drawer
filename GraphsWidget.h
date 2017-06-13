@@ -12,7 +12,7 @@ class GraphsWidget : public QWidget
     Q_OBJECT
 private:
     int legend_area_width;
-    int x_offset, y_offset;
+    int x_axis_offset, y_axis_offset;
     QVector<Graph *> graphs;//точки отсортированы по координате x
     QPainter *painter;
     double x_min, x_max, y_min, y_max, x_scale, y_scale;
@@ -32,6 +32,9 @@ private:
     QString x_name, y_name;
     QLabel *x_name_label, *y_name_label;
     int scale;
+    bool isLeftButtonDown;
+    int mouse_x_0, mouse_y_0;
+    double frame_x_offset, frame_y_offset;
 public:
     explicit GraphsWidget(QWidget *parent = 0);
     ~GraphsWidget();
@@ -44,6 +47,9 @@ signals:
 
 public slots:
     void setScale(int scale);
+    void mouseMoveEvent(QMouseEvent * e);
+    void mousePressEvent(QMouseEvent * e);
+    void mouseReleaseEvent(QMouseEvent *e);
 };
 
 #endif // GRAPHSWIDGET_H
