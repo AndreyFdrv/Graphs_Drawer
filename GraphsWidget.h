@@ -31,6 +31,7 @@ private:
     QVector<QLabel *> y_labels;
     QString x_name, y_name;
     QLabel *x_name_label, *y_name_label;
+    int scale;
 public:
     explicit GraphsWidget(QWidget *parent = 0);
     ~GraphsWidget();
@@ -42,7 +43,7 @@ protected:
 signals:
 
 public slots:
-
+    void setScale(int scale);
 };
 
 #endif // GRAPHSWIDGET_H

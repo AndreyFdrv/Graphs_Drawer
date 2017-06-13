@@ -12,6 +12,7 @@ GraphsWidget::GraphsWidget(QWidget *parent) :
     y_divisions_count=10;
     x_name="x";
     y_name="y";
+    scale=100;
 }
 GraphsWidget::~GraphsWidget()
 {
@@ -65,7 +66,8 @@ void GraphsWidget::DrawAxises()
     DrawLine(x-10, y+10, x, y, QColor(Qt::black));
     DrawLine(x+10, y+10, x, y, QColor(Qt::black));
     double x_steep=(x_max-x_min)/(x_divisions_count-1);
-    for (double i = x_min; i < x_max; i+=x_steep)
+    double eps=0.001;
+    for (double i = x_min; abs(x_max-i)>eps; i+=x_steep)
     {
         x=x_scale * (i - x_min)+x_offset;
         y=height()-y_offset;
@@ -77,7 +79,7 @@ void GraphsWidget::DrawAxises()
         label->show();
     }
     double y_steep=(y_max-y_min)/(y_divisions_count-1);
-    for(double i=y_min; i<y_max; i+=y_steep)
+    for(double i=y_min; abs(y_max-i)>eps; i+=y_steep)
     {
         x=x_offset;
         y=height()-y_offset-y_scale*(i-y_min);
@@ -107,6 +109,12 @@ void GraphsWidget::Clear()
     painter->setBrush(QBrush(Qt::white, Qt::SolidPattern));
     painter->drawRect(0, 0, this->width()-1, this->height()-1);
     painter->drawRect(x_offset, 0, this->width()-legend_area_width-x_offset, this->height()-y_offset);
+    for(int i=0; i<x_labels.size(); i++)
+        delete x_labels.at(i);
+    for(int i=0; i<y_labels.size(); i++)
+        delete y_labels.at(i);
+    x_labels.clear();
+    y_labels.clear();
 }
 void GraphsWidget::ComputeBorders()
 {
@@ -134,6 +142,13 @@ void GraphsWidget::ComputeBorders()
                 y_max=graphs.at(i)->getY(j);
         }
     }
+    double k=(double)(100-scale)/200;
+    double a=x_max-x_min;
+    double b=y_max-y_min;
+    x_min+=k*a;
+    x_max-=k*a;
+    y_min+=k*b;
+    y_max-=k*b;
 }
 void GraphsWidget::ComputeScales()
 {
@@ -210,6 +225,11 @@ void GraphsWidget::DrawGraphs()
             y0=y1;
         }
     }
+    painter->setPen(QPen(Qt::white, 1, Qt::SolidLine, Qt::FlatCap));
+    painter->setBrush(QBrush(Qt::white, Qt::SolidPattern));
+    painter->drawRect(1, 1, x_offset-2, this->height()-y_offset);
+    painter->drawRect(1, this->height()-y_offset+1, this->width()-3, y_offset-3);
+    painter->drawRect(this->width()-legend_area_width+1, 1, legend_area_width-3, this->height()-3);
 }
 void GraphsWidget::DrawGrid()
 {
@@ -250,4 +270,9 @@ bool GraphsWidget::isGraphExsist(QString name)
             return true;
     }
     return false;
+}
+void GraphsWidget::setScale(int scale)
+{
+    this->scale=scale;
+    repaint();
 }

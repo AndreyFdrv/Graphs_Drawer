@@ -15,8 +15,13 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+    void on_ScaleSlider_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
+signals:
+    void ScaleChanged(int scale);
 };
 
 #endif // MAINWINDOW_H
