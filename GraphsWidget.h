@@ -27,8 +27,10 @@ private:
     void DrawLine(int x0, int y0, int x1, int y1, QColor color);
     void DrawGrid();
     void DrawAxises();
+    void DrawLegend();
     QVector<QLabel *> x_labels;
     QVector<QLabel *> y_labels;
+    QVector<QLabel *> legend_labels;
     QString x_name, y_name;
     QLabel *x_name_label, *y_name_label;
     int scale;

@@ -10,6 +10,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(this, SIGNAL(ScaleChanged(int)),
                ui->graphs_widget, SLOT(setScale(int)));
     ui->graphs_widget->AddGraph("График 1.txt");
+    ui->graphs_widget->AddGraph("График 2.txt");
+    ui->graphs_widget->AddGraph("График 3.txt");
 }
 MainWindow::~MainWindow()
 {

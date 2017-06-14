@@ -34,6 +34,26 @@ void GraphsWidget::paintEvent(QPaintEvent *event)
         DrawGrid();
         DrawGraphs();
         DrawAxises();
+        DrawLegend();
+    }
+}
+void GraphsWidget::DrawLegend()
+{
+    int x=width()-legend_area_width+5;
+    int y=5;
+    const int size=10;
+    const int row_distance=15;
+    for(int i=0; i<graphs.length(); i++)
+    {
+        QColor color=GenerateColor(i);
+        painter->setPen(QPen(color, 1, Qt::SolidLine, Qt::FlatCap));
+        painter->setBrush(QBrush(color, Qt::SolidPattern));
+        painter->drawRect(x, y+row_distance*i, size, size);
+        QLabel *label=new QLabel(this);
+        legend_labels.insert(legend_labels.size(), label);
+        label->setText(graphs.at(i)->getName());
+        label->move(x+15, y+row_distance*i-4);
+        label->show();
     }
 }
 void GraphsWidget::AddPoint(QString graph_name, double x, double y)
@@ -115,10 +135,13 @@ void GraphsWidget::Clear()
     painter->drawRect(x_axis_offset, 0, this->width()-legend_area_width-x_axis_offset, this->height()-y_axis_offset);
     for(int i=0; i<x_labels.size(); i++)
         delete x_labels.at(i);
+    x_labels.clear();
     for(int i=0; i<y_labels.size(); i++)
         delete y_labels.at(i);
-    x_labels.clear();
     y_labels.clear();
+    for(int i=0; i<legend_labels.size(); i++)
+        delete legend_labels.at(i);
+    legend_labels.clear();
 }
 void GraphsWidget::ComputeBorders()
 {
