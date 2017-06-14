@@ -38,9 +38,10 @@ private:
     int mouse_x_0, mouse_y_0;
     double frame_x_offset, frame_y_offset;
 public:
+    bool no_repaint;
     explicit GraphsWidget(QWidget *parent = 0);
     ~GraphsWidget();
-    void AddGraph(char *filename);
+    void AddGraph(QString filename);
     bool isGraphExsist(QString name);
     void AddPoint(QString graph_name, double x, double y);
 protected:
@@ -52,6 +53,7 @@ public slots:
     void mouseMoveEvent(QMouseEvent * e);
     void mousePressEvent(QMouseEvent * e);
     void mouseReleaseEvent(QMouseEvent *e);
+    void setAxisesName(QString name1, QString name2);
 };
 
 #endif // GRAPHSWIDGET_H

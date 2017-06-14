@@ -19,7 +19,7 @@ void Graph::RemovePoint(int index)
 {
     points.removeAt(index);
 }
-void Graph::LoadGraphFromFile(char* filename)
+void Graph::LoadGraphFromFile(QString filename)
 {
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))

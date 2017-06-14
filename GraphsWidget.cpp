@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <float.h>
 #include <QMouseEvent>
+#include "math.h"
 GraphsWidget::GraphsWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -17,6 +18,9 @@ GraphsWidget::GraphsWidget(QWidget *parent) :
     isLeftButtonDown=false;
     frame_x_offset=0;
     frame_y_offset=0;
+    no_repaint=false;
+    x_name_label=NULL;
+    y_name_label=NULL;
 }
 GraphsWidget::~GraphsWidget()
 {
@@ -25,6 +29,8 @@ GraphsWidget::~GraphsWidget()
 void GraphsWidget::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
+    if(no_repaint)
+        return;
     painter=new QPainter(this);
     Clear();
     if(graphs.length()!=0)
@@ -90,8 +96,8 @@ void GraphsWidget::DrawAxises()
     DrawLine(x-10, y+10, x, y, QColor(Qt::black));
     DrawLine(x+10, y+10, x, y, QColor(Qt::black));
     double x_steep=(x_max-x_min)/(x_divisions_count-1);
-    double eps=0.001;
-    for (double i = x_min; abs(x_max-i)>eps; i+=x_steep)
+    double eps=0.0001;
+    for (double i = x_min; fabs(x_max-i)>eps; i+=x_steep)
     {
         x=x_scale * (i - x_min)+x_axis_offset;
         y=height()-y_axis_offset;
@@ -103,7 +109,7 @@ void GraphsWidget::DrawAxises()
         label->show();
     }
     double y_steep=(y_max-y_min)/(y_divisions_count-1);
-    for(double i=y_min; abs(y_max-i)>eps; i+=y_steep)
+    for(double i=y_min; fabs(y_max-i)>eps; i+=y_steep)
     {
         x=x_axis_offset;
         y=height()-y_axis_offset-y_scale*(i-y_min);
@@ -142,6 +148,10 @@ void GraphsWidget::Clear()
     for(int i=0; i<legend_labels.size(); i++)
         delete legend_labels.at(i);
     legend_labels.clear();
+    if(x_name_label!=NULL)
+        delete x_name_label;
+    if(y_name_label!=NULL)
+        delete y_name_label;
 }
 void GraphsWidget::ComputeBorders()
 {
@@ -278,7 +288,7 @@ void GraphsWidget::DrawGrid()
         DrawLine(x_axis_offset, y, width()-legend_area_width, y, QColor(Qt::gray));
     }
 }
-void GraphsWidget::AddGraph(char *filename)
+void GraphsWidget::AddGraph(QString filename)
 {
     Graph *graph=new Graph();
     graph->LoadGraphFromFile(filename);
@@ -291,7 +301,7 @@ void GraphsWidget::AddGraph(char *filename)
         msgBox.exec();
         return;
     }
-    graphs.insert(0, graph);
+    graphs.insert(graphs.size(), graph);
     repaint();
 }
 bool GraphsWidget::isGraphExsist(QString name)
@@ -331,4 +341,10 @@ void GraphsWidget::mouseMoveEvent(QMouseEvent *e)
     repaint();
     mouse_x_0=mouse_x_1;
     mouse_y_0=mouse_y_1;
+}
+void GraphsWidget::setAxisesName(QString name1, QString name2)
+{
+    x_name=name1;
+    y_name=name2;
+    repaint();
 }
