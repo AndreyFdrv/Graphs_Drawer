@@ -15,7 +15,7 @@ void Graph::AddPoint(double x, double y)
     }
     points.insert(i, QPointF(x, y));
 }
-void Graph::RemovePoint(int index)
+void Graph::DeletePoint(int index)
 {
     points.removeAt(index);
 }
@@ -65,4 +65,12 @@ double Graph::getY(int index)
 int Graph::PointsCount()
 {
     return points.length();
+}
+void Graph::setX(int index, double value)
+{
+    points[index].setX(value);
+}
+void Graph::setY(int index, double value)
+{
+    points[index].setY(value);
 }

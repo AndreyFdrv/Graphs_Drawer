@@ -11,11 +11,13 @@ private:
 public:
     Graph();
     void AddPoint(double x, double y);
-    void RemovePoint(int index);
+    void DeletePoint(int index);
     void LoadGraphFromFile(QString filename);
     QString getName();
     double getX(int index);
     double getY(int index);
+    void setX(int index, double value);
+    void setY(int index, double value);
     int PointsCount();
 };
 

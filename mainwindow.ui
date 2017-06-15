@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>887</width>
+    <width>1040</width>
     <height>555</height>
    </rect>
   </property>
@@ -94,7 +94,7 @@
       <x>720</x>
       <y>70</y>
       <width>151</width>
-      <height>101</height>
+      <height>111</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -109,7 +109,7 @@
        <x>10</x>
        <y>0</y>
        <width>131</width>
-       <height>31</height>
+       <height>41</height>
       </rect>
      </property>
      <property name="text">
@@ -121,7 +121,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>30</y>
+       <y>40</y>
        <width>41</width>
        <height>17</height>
       </rect>
@@ -134,7 +134,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>50</y>
+       <y>60</y>
        <width>41</width>
        <height>17</height>
       </rect>
@@ -147,7 +147,7 @@
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>30</y>
+       <y>40</y>
        <width>81</width>
        <height>21</height>
       </rect>
@@ -160,7 +160,7 @@
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>50</y>
+       <y>60</y>
        <width>81</width>
        <height>21</height>
       </rect>
@@ -173,7 +173,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>70</y>
+       <y>80</y>
        <width>99</width>
        <height>27</height>
       </rect>
@@ -187,7 +187,7 @@
     <property name="geometry">
      <rect>
       <x>720</x>
-      <y>170</y>
+      <y>180</y>
       <width>151</width>
       <height>171</height>
      </rect>
@@ -255,27 +255,27 @@
       <rect>
        <x>10</x>
        <y>40</y>
-       <width>113</width>
+       <width>131</width>
        <height>21</height>
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="Coordinate1LineEdit">
+    <widget class="QLineEdit" name="AddCoordinate1LineEdit">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>80</y>
-       <width>113</width>
+       <width>131</width>
        <height>21</height>
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="Coordinate2LineEdit">
+    <widget class="QLineEdit" name="AddCoordinate2LineEdit">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>120</y>
-       <width>113</width>
+       <width>131</width>
        <height>21</height>
       </rect>
      </property>
@@ -294,13 +294,116 @@
      </property>
     </widget>
    </widget>
+   <widget class="QPushButton" name="DeletePointButton">
+    <property name="geometry">
+     <rect>
+      <x>870</x>
+      <y>220</y>
+      <width>151</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Удалить выбранную
+ точку</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame_3">
+    <property name="geometry">
+     <rect>
+      <x>870</x>
+      <y>70</y>
+      <width>151</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>0</y>
+       <width>131</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Переместить
+выбранную точку</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_9">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>101</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Координата 1:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_10">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>101</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Координата 2:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="ChangeCoordinate2LineEdit">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>100</y>
+       <width>131</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="ChangeCoordinate1LineEdit">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>131</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ChnagePointButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>120</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Применить</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>887</width>
+     <width>1040</width>
      <height>25</height>
     </rect>
    </property>

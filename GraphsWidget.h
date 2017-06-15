@@ -22,7 +22,7 @@ private:
     void ComputeBorders();
     void ComputeScales();
     void DrawGraphs();
-    void DrawPoint(int x, int y, QColor color);
+    void DrawPoint(int x, int y, QColor color, int point_radius);
     QColor GenerateColor(int index);
     void DrawLine(int x0, int y0, int x1, int y1, QColor color);
     void DrawGrid();
@@ -37,6 +37,8 @@ private:
     bool isLeftButtonDown;
     int mouse_x_0, mouse_y_0;
     double frame_x_offset, frame_y_offset;
+    int chosen_graph_number;
+    int chosen_point_number;
 public:
     bool no_repaint;
     explicit GraphsWidget(QWidget *parent = 0);
@@ -46,7 +48,7 @@ public:
 protected:
     void paintEvent(QPaintEvent *event);
 signals:
-
+    void ChosenPointChanged(double x, double y);
 public slots:
     void setScale(int scale);
     void mouseMoveEvent(QMouseEvent * e);
@@ -54,6 +56,8 @@ public slots:
     void mouseReleaseEvent(QMouseEvent *e);
     void setAxisesName(QString name1, QString name2);
     void AddPoint(QString graph_name, double x, double y);
+    void DeletePoint();
+    void setChoosenPointCoordinates(double x, double y);
 };
 
 #endif // GRAPHSWIDGET_H

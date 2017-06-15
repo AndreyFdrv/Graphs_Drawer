@@ -14,6 +14,12 @@ MainWindow::MainWindow(QWidget *parent) :
                ui->graphs_widget, SLOT(setAxisesName(QString, QString)));
     QObject::connect(this, SIGNAL(AddPoint(QString, double, double)),
                ui->graphs_widget, SLOT(AddPoint(QString, double, double)));
+    QObject::connect(this, SIGNAL(DeletePoint()),
+               ui->graphs_widget, SLOT(DeletePoint()));
+    QObject::connect(ui->graphs_widget, SIGNAL(ChosenPointChanged(double, double)),
+               this, SLOT(setChangeCoordinatesLineEdits(double, double)));
+    QObject::connect(this, SIGNAL(CoordinatesChanged(double, double)),
+               ui->graphs_widget, SLOT(setChoosenPointCoordinates(double, double)));
 }
 MainWindow::~MainWindow()
 {
@@ -25,7 +31,6 @@ void MainWindow::on_ScaleSlider_valueChanged(int value)
     ui->ScaleLabel->setText("Масштаб: "+QString::number(25*value)+"%");
     emit ScaleChanged(25*value);
 }
-
 void MainWindow::on_LoadGraphButton_clicked()
 {
     ui->graphs_widget->no_repaint=true;//почему-то перерисовка подписей осей и легенды вызывает
@@ -41,6 +46,20 @@ void MainWindow::on_AxisesNamesButton_clicked()
 }
 void MainWindow::on_AddPointButton_clicked()
 {
-    emit AddPoint(ui->GraphLineEdit->text(), (ui->Coordinate1LineEdit->text()).toDouble(),
-                  (ui->Coordinate2LineEdit->text()).toDouble());
+    emit AddPoint(ui->GraphLineEdit->text(), (ui->AddCoordinate1LineEdit->text()).toDouble(),
+                  (ui->AddCoordinate2LineEdit->text()).toDouble());
+}
+void MainWindow::on_DeletePointButton_clicked()
+{
+    emit DeletePoint();
+}
+void MainWindow::setChangeCoordinatesLineEdits(double x, double y)
+{
+    ui->ChangeCoordinate1LineEdit->setText(QString::number(x));
+    ui->ChangeCoordinate2LineEdit->setText(QString::number(y));
+}
+void MainWindow::on_ChnagePointButton_clicked()
+{
+    emit CoordinatesChanged((ui->ChangeCoordinate1LineEdit->text()).toDouble(),
+                            (ui->ChangeCoordinate2LineEdit->text()).toDouble());
 }

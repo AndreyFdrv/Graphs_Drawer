@@ -21,6 +21,8 @@ GraphsWidget::GraphsWidget(QWidget *parent) :
     no_repaint=false;
     x_name_label=NULL;
     y_name_label=NULL;
+    chosen_graph_number=-1;
+    chosen_point_number=-1;
 }
 GraphsWidget::~GraphsWidget()
 {
@@ -64,6 +66,9 @@ void GraphsWidget::DrawLegend()
 }
 void GraphsWidget::AddPoint(QString graph_name, double x, double y)
 {
+
+    if((chosen_point_number!=-1)&&(x<graphs.at(chosen_graph_number)->getX(chosen_point_number)))
+        chosen_point_number++;
     Graph *graph=NULL;
     for(int i=0; i<graphs.length(); i++)
     {
@@ -203,9 +208,8 @@ void GraphsWidget::ComputeScales()
     else
         y_scale=(height()-y_axis_offset)/(y_max-y_min);
 }
-void GraphsWidget::DrawPoint(int x, int y, QColor color)
+void GraphsWidget::DrawPoint(int x, int y, QColor color, int point_radius)
 {
-    const int point_radius=3;
     painter->setPen(QPen(color, 1, Qt::SolidLine, Qt::FlatCap));
     painter->setBrush(QBrush(color, Qt::SolidPattern));
     painter->drawEllipse(QPoint(x, y), point_radius, point_radius);
@@ -254,7 +258,10 @@ void GraphsWidget::DrawGraphs()
         x0=x_scale*(x0-x_min)+x_axis_offset;
         double y0=graphs.at(i)->getY(0);
         y0=height()-y_axis_offset-y_scale*(y0-y_min);
-        DrawPoint((int)x0, (int)y0, color);
+        int point_radius=3;
+        if((chosen_graph_number==i)&&(chosen_point_number==0))
+            point_radius=5;
+        DrawPoint((int)x0, (int)y0, color, point_radius);
         for(int j=1; j<graphs.at(i)->PointsCount(); j++)
         {
             double x1=graphs.at(i)->getX(j);
@@ -262,7 +269,10 @@ void GraphsWidget::DrawGraphs()
             double y1=graphs.at(i)->getY(j);
             y1=height()-y_axis_offset-y_scale*(y1-y_min);
             DrawLine((int)x0, (int)y0, (int)x1, (int)y1, color);
-            DrawPoint((int)x1, (int)y1, color);
+            point_radius=3;
+            if((chosen_graph_number==i)&&(chosen_point_number==j))
+                point_radius=5;
+            DrawPoint((int)x1, (int)y1, color, point_radius);
             x0=x1;
             y0=y1;
         }
@@ -323,6 +333,25 @@ void GraphsWidget::mousePressEvent(QMouseEvent *e)
     mouse_x_0=e->x();
     mouse_y_0=e->y();
     isLeftButtonDown=true;
+    for(int i=0; i<graphs.size(); i++)
+    {
+        for(int j=0; j<graphs.at(i)->PointsCount(); j++)
+        {
+            double x=graphs.at(i)->getX(j);
+            x=x_scale*(x-x_min)+x_axis_offset;
+            double y=graphs.at(i)->getY(j);
+            y=height()-y_axis_offset-y_scale*(y-y_min);
+            double eps=5;
+            if(sqrt(pow(e->x()-x, 2)+pow(e->y()-y, 2))<eps)
+            {
+                chosen_graph_number=i;
+                chosen_point_number=j;
+                emit ChosenPointChanged(graphs.at(i)->getX(j), graphs.at(i)->getY(j));
+                break;
+            }
+        }
+    }
+    repaint();
 }
 void GraphsWidget::mouseReleaseEvent(QMouseEvent *e)
 {
@@ -346,5 +375,20 @@ void GraphsWidget::setAxisesName(QString name1, QString name2)
 {
     x_name=name1;
     y_name=name2;
+    repaint();
+}
+void GraphsWidget::DeletePoint()
+{
+    if(chosen_point_number==-1)
+        return;
+    graphs.at(chosen_graph_number)->DeletePoint(chosen_point_number);
+    chosen_graph_number=-1;
+    chosen_point_number=-1;
+    repaint();
+}
+void GraphsWidget::setChoosenPointCoordinates(double x, double y)
+{
+    graphs.at(chosen_graph_number)->setX(chosen_point_number, x);
+    graphs.at(chosen_graph_number)->setY(chosen_point_number, y);
     repaint();
 }

@@ -24,12 +24,20 @@ private slots:
 
     void on_AddPointButton_clicked();
 
+    void on_DeletePointButton_clicked();
+
+    void on_ChnagePointButton_clicked();
+
+public slots:
+    void setChangeCoordinatesLineEdits(double x, double y);
 private:
     Ui::MainWindow *ui;
 signals:
     void ScaleChanged(int scale);
     void AxisesNamesChanged(QString name1, QString name2);
     void AddPoint(QString name, double x, double y);
+    void DeletePoint();
+    void CoordinatesChanged(double x, double y);
 };
 
 #endif // MAINWINDOW_H
