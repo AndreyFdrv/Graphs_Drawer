@@ -22,11 +22,14 @@ private slots:
 
     void on_AxisesNamesButton_clicked();
 
+    void on_AddPointButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 signals:
     void ScaleChanged(int scale);
     void AxisesNamesChanged(QString name1, QString name2);
+    void AddPoint(QString name, double x, double y);
 };
 
 #endif // MAINWINDOW_H

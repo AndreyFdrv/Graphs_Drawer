@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
                ui->graphs_widget, SLOT(setScale(int)));
     QObject::connect(this, SIGNAL(AxisesNamesChanged(QString, QString)),
                ui->graphs_widget, SLOT(setAxisesName(QString, QString)));
+    QObject::connect(this, SIGNAL(AddPoint(QString, double, double)),
+               ui->graphs_widget, SLOT(AddPoint(QString, double, double)));
 }
 MainWindow::~MainWindow()
 {
@@ -36,4 +38,9 @@ void MainWindow::on_LoadGraphButton_clicked()
 void MainWindow::on_AxisesNamesButton_clicked()
 {
     emit AxisesNamesChanged(ui->Axis1LineEdit->text(), ui->Axis2LineEdit->text());
+}
+void MainWindow::on_AddPointButton_clicked()
+{
+    emit AddPoint(ui->GraphLineEdit->text(), (ui->Coordinate1LineEdit->text()).toDouble(),
+                  (ui->Coordinate2LineEdit->text()).toDouble());
 }

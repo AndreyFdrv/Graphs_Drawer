@@ -43,7 +43,6 @@ public:
     ~GraphsWidget();
     void AddGraph(QString filename);
     bool isGraphExsist(QString name);
-    void AddPoint(QString graph_name, double x, double y);
 protected:
     void paintEvent(QPaintEvent *event);
 signals:
@@ -54,6 +53,7 @@ public slots:
     void mousePressEvent(QMouseEvent * e);
     void mouseReleaseEvent(QMouseEvent *e);
     void setAxisesName(QString name1, QString name2);
+    void AddPoint(QString graph_name, double x, double y);
 };
 
 #endif // GRAPHSWIDGET_H
