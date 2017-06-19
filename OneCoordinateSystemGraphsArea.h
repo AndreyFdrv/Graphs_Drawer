@@ -18,6 +18,7 @@ private:
     QLabel *x_name_label, *y_name_label;
     double frame_y_offset;
     GraphsWidget *widget;
+    double y_min_0, y_max_0;
     void Clear();
     void ComputeBorders();
     void ComputeScales();
@@ -30,6 +31,7 @@ private:
     void mouseMoveEvent(QMouseEvent * e);
     bool mousePressEvent(QMouseEvent *e, double &x, double &y);
     void DeleteAllLabels();
+    void FluentlyPaint(int i, int count);
 public:
     OneCoordinateSystemGraphsArea(GraphsWidget* widget);
     OneCoordinateSystemGraphsArea(GraphsWidget* widget, QVector<Graph *> graphs, QString x_name,

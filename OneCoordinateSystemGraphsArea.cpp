@@ -38,6 +38,27 @@ void OneCoordinateSystemGraphsArea::Paint(bool no_repaint)
         DrawLegend();
     }
 }
+void OneCoordinateSystemGraphsArea::FluentlyPaint(int i, int count)
+{
+    painter=new QPainter(widget);
+    if(graphs.length()==0)
+        return;
+    ComputeBorders();
+    double x_max_1=x_max;
+    double y_max_1=y_max;
+    double x_min_1=x_min;
+    double y_min_1=y_min;
+    x_max=x_max_0+i*(x_max_1-x_max_0)/(count-1);
+    y_max=y_max_0+i*(y_max_1-y_max_0)/(count-1);
+    x_min=x_min_0+i*(x_min_1-x_min_0)/(count-1);
+    y_min=y_min_0+i*(y_min_1-y_min_0)/(count-1);
+    Clear();
+    ComputeScales();
+    DrawGrid();
+    DrawGraphs();
+    DrawAxises();
+    DrawLegend();
+}
 void OneCoordinateSystemGraphsArea::DrawAxises()
 {
     int x=widget->width()-legend_area_width;
@@ -233,8 +254,6 @@ void OneCoordinateSystemGraphsArea::DrawGrid()
 }
 void OneCoordinateSystemGraphsArea::AddPoint(QString graph_name, double x, double y)
 {
-    frame_x_offset=0;
-    frame_y_offset=0;
     if((chosen_point_number!=-1)&&(x<graphs.at(chosen_graph_number)->getX(chosen_point_number)))
         chosen_point_number++;
     Graph *graph=NULL;
@@ -255,6 +274,12 @@ void OneCoordinateSystemGraphsArea::AddPoint(QString graph_name, double x, doubl
         msgBox.exec();
         return;
     }
+    x_min_0=x_min;
+    y_min_0=y_min;
+    x_max_0=x_max;
+    y_max_0=y_max;
+    frame_x_offset=0;
+    frame_y_offset=0;
     graph->AddPoint(x, y);
 }
 void OneCoordinateSystemGraphsArea::AddGraph(QString filename)

@@ -22,6 +22,7 @@ protected:
     double frame_x_offset;
     int chosen_graph_number;
     int chosen_point_number;
+    double x_min_0, x_max_0;
     void DrawPoint(int x, int y, QColor color, int point_radius);
     QColor GenerateColor(int index);
     void DrawLine(int x0, int y0, int x1, int y1, QColor color);
@@ -38,6 +39,7 @@ protected:
     virtual void mouseMoveEvent(QMouseEvent * e)=0;
     virtual bool mousePressEvent(QMouseEvent *e, double &x, double &y)=0;
     virtual void DeleteAllLabels()=0;
+    virtual void FluentlyPaint(int i, int count)=0;
 public:
     GraphsArea();
     GraphsArea(QString x_name, QString y_name, double scale);

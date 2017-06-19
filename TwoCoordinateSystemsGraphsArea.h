@@ -24,6 +24,7 @@ private:
     double upper_frame_y_offset, lower_frame_y_offset;
     bool isUpperGraphChosen;
     GraphsWidget *widget;
+    double upper_y_min_0, upper_y_max_0, lower_y_min_0, lower_y_max_0;
     void Clear();
     void ComputeBorders();
     void ComputeScales();
@@ -36,6 +37,7 @@ private:
     void mouseMoveEvent(QMouseEvent * e);
     bool mousePressEvent(QMouseEvent *e, double &x, double &y);
     void DeleteAllLabels();
+    void FluentlyPaint(int i, int count);
 public:
     TwoCoordinateSystemsGraphsArea(GraphsWidget* widget);
     TwoCoordinateSystemsGraphsArea(GraphsWidget* widget, QVector<Graph *> graphs, QString x_name,

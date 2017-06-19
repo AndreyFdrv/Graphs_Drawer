@@ -12,22 +12,46 @@ GraphsWidget::GraphsWidget(QWidget *parent) :
     two_systems_area=new TwoCoordinateSystemsGraphsArea(this);
     isOneCoordinateSystem=true;
     no_repaint=false;
+    isFluentlyPaint=false;
+    fluently_paint_iterations_count=100;
 }
 void GraphsWidget::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
-    if(isOneCoordinateSystem)
-        one_system_area->Paint(no_repaint);
+    if(isFluentlyPaint)
+    {
+        if(isOneCoordinateSystem)
+            one_system_area->FluentlyPaint(
+                        fluently_paint_iteration_number,
+                        fluently_paint_iterations_count);
+        else
+            two_systems_area->FluentlyPaint(
+                        fluently_paint_iteration_number,
+                        fluently_paint_iterations_count);
+    }
     else
-        two_systems_area->Paint(no_repaint);
+    {
+        if(isOneCoordinateSystem)
+            one_system_area->Paint(no_repaint);
+        else
+            two_systems_area->Paint(no_repaint);
+    }
 }
 void GraphsWidget::AddPoint(QString graph_name, double x, double y)
 {
+    if((graph_name==NULL)||(graph_name==""))
+        return;
+    isFluentlyPaint=true;
     if(isOneCoordinateSystem)
         one_system_area->AddPoint(graph_name, x, y);
     else
         two_systems_area->AddPoint(graph_name, x, y);
-    repaint();
+    for(int i=0; i<fluently_paint_iterations_count; i++)
+    {
+        fluently_paint_iteration_number=i;
+        repaint();
+    }
+    isFluentlyPaint=false;
 }
 void GraphsWidget::AddGraph(QString filename)
 {

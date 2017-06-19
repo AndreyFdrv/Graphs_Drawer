@@ -3,6 +3,31 @@
 #include <float.h>
 #include <QMessageBox>
 #include <QMouseEvent>
+void TwoCoordinateSystemsGraphsArea::FluentlyPaint(int i, int count)
+{
+    painter=new QPainter(widget);
+    if(upper_graphs.length()+lower_graphs.length()==0)
+        return;
+    ComputeBorders();
+    double x_max_1=x_max;
+    double upper_y_max_1=upper_y_max;
+    double lower_y_max_1=lower_y_max;
+    double x_min_1=x_min;
+    double upper_y_min_1=upper_y_min;
+    double lower_y_min_1=lower_y_min;
+    x_max=x_max_0+i*(x_max_1-x_max_0)/(count-1);
+    upper_y_max=upper_y_max_0+i*(upper_y_max_1-upper_y_max_0)/(count-1);
+    lower_y_max=lower_y_max_0+i*(lower_y_max_1-lower_y_max_0)/(count-1);
+    x_min=x_min_0+i*(x_min_1-x_min_0)/(count-1);
+    upper_y_min=upper_y_min_0+i*(upper_y_min_1-upper_y_min_0)/(count-1);
+    lower_y_min=lower_y_min_0+i*(lower_y_min_1-lower_y_min_0)/(count-1);
+    Clear();
+    ComputeScales();
+    DrawGrid();
+    DrawGraphs();
+    DrawAxises();
+    DrawLegend();
+}
 TwoCoordinateSystemsGraphsArea::TwoCoordinateSystemsGraphsArea(GraphsWidget* widget):GraphsArea()
 {
     upper_frame_y_offset=0;
@@ -420,6 +445,12 @@ void TwoCoordinateSystemsGraphsArea::AddPoint(QString graph_name, double x, doub
         msgBox.exec();
         return;
     }
+    x_min_0=x_min;
+    upper_y_min_0=upper_y_min;
+    lower_y_min_0=lower_y_min;
+    x_max_0=x_max;
+    upper_y_max_0=upper_y_max;
+    lower_y_max_0=lower_y_max;
     graph->AddPoint(x, y);
 }
 void TwoCoordinateSystemsGraphsArea::AddGraph(QString filename)

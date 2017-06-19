@@ -16,6 +16,9 @@ class GraphsWidget : public QWidget
 private:
     OneCoordinateSystemGraphsArea *one_system_area;
     TwoCoordinateSystemsGraphsArea *two_systems_area;
+    bool isFluentlyPaint;
+    int fluently_paint_iteration_number;
+    int fluently_paint_iterations_count;
 public:
     bool isOneCoordinateSystem;
     GraphsWidget(QWidget *parent = 0);
