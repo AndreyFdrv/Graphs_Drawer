@@ -1,48 +1,25 @@
 #ifndef GRAPHSWIDGET_H
 #define GRAPHSWIDGET_H
-
 #include <QWidget>
 #include <QVector>
 #include "Graph.h"
 #include <QPainter>
 #include <QLabel>
 #include <QString>
+#include "OneCoordinateSystemGraphsArea.h"
+#include "TwoCoordinateSystemsGraphsArea.h"
+class OneCoordinateSystemGraphsArea;
+class TwoCoordinateSystemsGraphsArea;
 class GraphsWidget : public QWidget
 {
     Q_OBJECT
 private:
-    int legend_area_width;
-    int x_axis_offset, y_axis_offset;
-    QVector<Graph *> graphs;//точки отсортированы по координате x
-    QPainter *painter;
-    double x_min, x_max, y_min, y_max, x_scale, y_scale;
-    int x_divisions_count, y_divisions_count;
-    void Clear();
-    void DrawGraph(Graph *graph);
-    void ComputeBorders();
-    void ComputeScales();
-    void DrawGraphs();
-    void DrawPoint(int x, int y, QColor color, int point_radius);
-    QColor GenerateColor(int index);
-    void DrawLine(int x0, int y0, int x1, int y1, QColor color);
-    void DrawGrid();
-    void DrawAxises();
-    void DrawLegend();
-    QVector<QLabel *> x_labels;
-    QVector<QLabel *> y_labels;
-    QVector<QLabel *> legend_labels;
-    QString x_name, y_name;
-    QLabel *x_name_label, *y_name_label;
-    int scale;
-    bool isLeftButtonDown;
-    int mouse_x_0, mouse_y_0;
-    double frame_x_offset, frame_y_offset;
-    int chosen_graph_number;
-    int chosen_point_number;
+    OneCoordinateSystemGraphsArea *one_system_area;
+    TwoCoordinateSystemsGraphsArea *two_systems_area;
 public:
+    bool isOneCoordinateSystem;
+    GraphsWidget(QWidget *parent = 0);
     bool no_repaint;
-    explicit GraphsWidget(QWidget *parent = 0);
-    ~GraphsWidget();
     void AddGraph(QString filename);
     bool isGraphExsist(QString name);
 protected:
@@ -55,9 +32,10 @@ public slots:
     void mousePressEvent(QMouseEvent * e);
     void mouseReleaseEvent(QMouseEvent *e);
     void setAxisesName(QString name1, QString name2);
-    void AddPoint(QString graph_name, double x, double y);
-    void DeletePoint();
+    void AddPoint(QString graph_name, double point_x, double point_y);
+    void DeleteChosenPoint();
     void setChoosenPointCoordinates(double x, double y);
+    void ChangeMode();
 };
 
 #endif // GRAPHSWIDGET_H

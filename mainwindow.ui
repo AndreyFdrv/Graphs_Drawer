@@ -397,6 +397,20 @@
      </property>
     </widget>
    </widget>
+   <widget class="QPushButton" name="ChangeModeButton">
+    <property name="geometry">
+     <rect>
+      <x>870</x>
+      <y>270</y>
+      <width>151</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Режим двух 
+систем координат</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

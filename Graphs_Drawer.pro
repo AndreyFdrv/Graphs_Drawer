@@ -15,10 +15,16 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     Graph.cpp \
-    GraphsWidget.cpp
+    GraphsWidget.cpp \
+    OneCoordinateSystemGraphsArea.cpp \
+    TwoCoordinateSystemsGraphsArea.cpp \
+    GraphsArea.cpp
 
 HEADERS  += mainwindow.h \
     Graph.h \
-    GraphsWidget.h
+    GraphsWidget.h \
+    OneCoordinateSystemGraphsArea.h \
+    TwoCoordinateSystemsGraphsArea.h \
+    GraphsArea.h
 
 FORMS    += mainwindow.ui

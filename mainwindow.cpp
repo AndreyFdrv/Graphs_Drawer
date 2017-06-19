@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    isOneCoordinateSystem=true;
     QObject::connect(this, SIGNAL(ScaleChanged(int)),
                ui->graphs_widget, SLOT(setScale(int)));
     QObject::connect(this, SIGNAL(AxisesNamesChanged(QString, QString)),
@@ -15,11 +16,13 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(this, SIGNAL(AddPoint(QString, double, double)),
                ui->graphs_widget, SLOT(AddPoint(QString, double, double)));
     QObject::connect(this, SIGNAL(DeletePoint()),
-               ui->graphs_widget, SLOT(DeletePoint()));
+               ui->graphs_widget, SLOT(DeleteChosenPoint()));
     QObject::connect(ui->graphs_widget, SIGNAL(ChosenPointChanged(double, double)),
                this, SLOT(setChangeCoordinatesLineEdits(double, double)));
     QObject::connect(this, SIGNAL(CoordinatesChanged(double, double)),
                ui->graphs_widget, SLOT(setChoosenPointCoordinates(double, double)));
+    QObject::connect(this, SIGNAL(ChangeMode()),
+               ui->graphs_widget, SLOT(ChangeMode()));
 }
 MainWindow::~MainWindow()
 {
@@ -62,4 +65,18 @@ void MainWindow::on_ChnagePointButton_clicked()
 {
     emit CoordinatesChanged((ui->ChangeCoordinate1LineEdit->text()).toDouble(),
                             (ui->ChangeCoordinate2LineEdit->text()).toDouble());
+}
+void MainWindow::on_ChangeModeButton_clicked()
+{
+    emit ChangeMode();
+    if(isOneCoordinateSystem)
+    {
+        isOneCoordinateSystem=false;
+        ui->ChangeModeButton->setText("Режим одной \nсистемы координат");
+    }
+    else
+    {
+        isOneCoordinateSystem=true;
+        ui->ChangeModeButton->setText("Режим двух \nсистем координат");
+    }
 }

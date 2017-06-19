@@ -28,16 +28,20 @@ private slots:
 
     void on_ChnagePointButton_clicked();
 
+    void on_ChangeModeButton_clicked();
+
 public slots:
     void setChangeCoordinatesLineEdits(double x, double y);
 private:
     Ui::MainWindow *ui;
+    bool isOneCoordinateSystem;
 signals:
     void ScaleChanged(int scale);
     void AxisesNamesChanged(QString name1, QString name2);
     void AddPoint(QString name, double x, double y);
     void DeletePoint();
     void CoordinatesChanged(double x, double y);
+    void ChangeMode();
 };
 
 #endif // MAINWINDOW_H

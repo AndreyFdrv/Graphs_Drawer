@@ -6,7 +6,7 @@
 class Graph
 {
 private:
-    QVector<QPointF> points;//точки отсортированы по координате x
+    QVector<QPointF> points;
     QString name;
 public:
     Graph();
